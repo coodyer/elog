@@ -1,0 +1,47 @@
+.pagin a.btn-skipsearch, .pagin .btn-skipsearch:hover {
+float: left;
+width: 53px;
+height: 25px;
+padding: 0;
+margin-left: 5px;
+border: 0;
+background: url(../images/20130415i.png) no-repeat -126px -52px;
+line-height: 25px;
+text-align: center;
+cursor: pointer;
+color: #333;
+}
+.pagin .prev, .pagin .next, .pagin .prev-disabled, .pagin .next-disabled
+	{
+	padding: 4px 10px 5px;
+	border-radius: 3px;
+	background: #fff
+}
+
+.pagin a, .pagin span {
+	height: 19px
+}
+
+.pagin .page-skip {
+	height: 26px;
+	padding: 0 5px;
+	border: 0;
+	font-size: 12px
+}
+
+.pagin .jumpto {
+	float: left;
+	width: 36px;
+	height: 21px;
+	padding: 1px;
+	border-width: 1px;
+	border-style: solid;
+	border-color: #aaa #ddd #ddd #aaa;
+	text-align: center;
+	font-family: verdana
+}
+
+.pagin-m a, .pagin-m span.text {
+	height: 14px;
+	font-family: verdana
+}

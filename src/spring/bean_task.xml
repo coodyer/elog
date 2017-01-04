@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
+           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd">
+  
+  <!-- 采集程序定时执行 -->
+   <bean id="collJournalInitQuartz" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">             
+    <property name="targetObject"> 
+       <ref bean="collJournalTask"/> 
+    </property>             
+    <property name="targetMethod">
+     <value>excuteTask</value>
+    </property>
+   </bean>   
+   <bean id="collJournalInitTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean"> 
+     <property name="jobDetail"> 
+       <ref bean="collJournalInitQuartz"/>
+     </property>     
+     <!-- cron表达式  ， 每5分钟跑一次-->            
+      <property name="cronExpression"> 
+       <value>0 0/1 * * * ?</value> 
+      </property>        
+   </bean>    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<!-- SITEMAP定时生成 -->
+	<bean id="siteMapInitQuartz" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">             
+    <property name="targetObject"> 
+       <ref bean="siteMapTask"/> 
+    </property>             
+    <property name="targetMethod">
+     <value>excuteTask</value>
+    </property>
+   </bean>   
+   <bean id="siteMapInitTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean"> 
+     <property name="jobDetail"> 
+       <ref bean="siteMapInitQuartz"/>
+     </property>     
+     <!-- cron表达式  ，-->            
+      <property name="cronExpression"> 
+      <value>0 0 0,6,12,18 * * ?</value>  
+      </property>        
+   </bean>   
+	
+	
+	
+	<!-- 采集程序定时执行 -->
+   <bean id="journalRankInitQuartz" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">             
+    <property name="targetObject"> 
+       <ref bean="journalRankTask"/> 
+    </property>             
+    <property name="targetMethod">
+     <value>excuteTask</value>
+    </property>
+   </bean>   
+   <bean id="journalRankInitTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean"> 
+     <property name="jobDetail"> 
+       <ref bean="journalRankInitQuartz"/>
+     </property>     
+      <property name="cronExpression"> 
+       <value>0 0/5 * * * ?</value> 
+      </property>        
+   </bean>   
+	
+	
+	
+	 <!-- quartz schedule task list  -->
+	<bean id="pollingFaction"
+		class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="triggers">
+			<list>
+					<!-- <ref bean="collJournalInitTrigger"/> 
+								
+			        <ref bean="siteMapInitTrigger"/> 
+				 
+				 <ref bean="journalRankInitTrigger"/>   -->
+			</list>
+		</property>
+	</bean>
+</beans>
