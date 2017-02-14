@@ -9,8 +9,8 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
-import com.blog.web.annotation.CacheHandle;
-import com.blog.web.annotation.DelCacheHandle;
+import com.blog.web.annotation.CacheWipe;
+import com.blog.web.annotation.CacheWrite;
 import com.blog.web.base.cache.CacheFinal;
 import com.blog.web.cache.base.BaseCache;
 import com.blog.web.entity.Where;
@@ -25,7 +25,7 @@ public class TypeCache extends BaseCache {
 	@Resource
 	TypeService typeService;
 
-	@CacheHandle(key = CacheFinal.JOURNAL_TYPE_LIST, validTime = 600)
+	@CacheWrite(key = CacheFinal.JOURNAL_TYPE_LIST, validTime = 600)
 	public  List<Types> loadTypes() {
 		List<Types> types = (List<Types>) baseService.load(Types.class);
 		types = formatTypes(types);
@@ -33,7 +33,7 @@ public class TypeCache extends BaseCache {
 		return types;
 	}
 
-	@CacheHandle(key = CacheFinal.JOURNAL_TYPE_LIST, validTime = 600)
+	@CacheWrite(key = CacheFinal.JOURNAL_TYPE_LIST, validTime = 600)
 	public  List<Types> loadInTypes(Integer... ids) {
 		List<Types> types = (List<Types>) baseService.findInFields(Types.class,
 				"id", ids);
@@ -41,7 +41,7 @@ public class TypeCache extends BaseCache {
 	}
 
 	// 加载第三方采集类别
-	@CacheHandle(key = CacheFinal.JOURNAL_TYPE_LIST, validTime = 600)
+	@CacheWrite(key = CacheFinal.JOURNAL_TYPE_LIST, validTime = 600)
 	public  List<Types> loadOtherTypes() {
 		Where where = new Where().set("otherUrl", "<>", "");
 		List<Types> types = (List<Types>) baseService.findByObject(Types.class,
@@ -49,7 +49,7 @@ public class TypeCache extends BaseCache {
 		return types;
 	}
 
-	@CacheHandle(key = CacheFinal.JOURNAL_TYPE_LIST, validTime = 600)
+	@CacheWrite(key = CacheFinal.JOURNAL_TYPE_LIST, validTime = 600)
 	public  List<Types> loadTypes(Integer parentId) {
 		List<Types> types = loadTypes();
 		if (StringUtils.isNullOrEmpty(types)) {
@@ -66,14 +66,16 @@ public class TypeCache extends BaseCache {
 		return types;
 	}
 
-	@DelCacheHandle(keys = { CacheFinal.JOURNAL_TYPE_LIST,
-			CacheFinal.JOURNAL_TYPE_INFO, CacheFinal.JOURNAL_TYPE_COUNT })
+	@CacheWipe(key=CacheFinal.JOURNAL_TYPE_LIST,isModel=true)
+	@CacheWipe(key=CacheFinal.JOURNAL_TYPE_INFO,isModel=true)
+	@CacheWipe(key=CacheFinal.JOURNAL_TYPE_COUNT,isModel=true)
 	public void saveType(Types type) {
 		baseService.saveOrUpdate(type);
 	}
 
-	@DelCacheHandle(keys = { CacheFinal.JOURNAL_TYPE_LIST,
-			CacheFinal.JOURNAL_TYPE_INFO, CacheFinal.JOURNAL_TYPE_COUNT })
+	@CacheWipe(key=CacheFinal.JOURNAL_TYPE_LIST,isModel=true)
+	@CacheWipe(key=CacheFinal.JOURNAL_TYPE_INFO,isModel=true)
+	@CacheWipe(key=CacheFinal.JOURNAL_TYPE_COUNT,isModel=true)
 	public void delType(Integer id) {
 		baseService.delete(Types.class, id);
 	}
@@ -113,7 +115,7 @@ public class TypeCache extends BaseCache {
 		return type;
 	}
 
-	@CacheHandle(key = CacheFinal.JOURNAL_TYPE_INFO, validTime = 3600)
+	@CacheWrite(key = CacheFinal.JOURNAL_TYPE_INFO, validTime = 3600)
 	public Types getType(Integer parentClass, String name) {
 		if (StringUtils.isNullOrEmpty(name)) {
 			return null;
@@ -129,7 +131,7 @@ public class TypeCache extends BaseCache {
 		return types.get(0);
 	}
 
-	@CacheHandle(key = CacheFinal.JOURNAL_TYPE_COUNT, validTime = 3600)
+	@CacheWrite(key = CacheFinal.JOURNAL_TYPE_COUNT, validTime = 3600)
 	private  List<Types> loadTypeJournalCount(List<Types> types) {
 		if (StringUtils.isNullOrEmpty(types)) {
 			return null;

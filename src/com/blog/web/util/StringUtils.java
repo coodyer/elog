@@ -30,7 +30,16 @@ public class StringUtils {
 		}
 		return "";
 	}
-
+	public static String toString(Object obj) {
+		if (isNullOrEmpty(obj)) {
+			return null;
+		}
+		try {
+			return String.valueOf(obj.toString());
+		} catch (Exception e) {
+			return null;
+		}
+	}
 	public static Integer[] getIntegerParas(Object[] objs) {
 		if (isNullOrEmpty(objs)) {
 			return null;

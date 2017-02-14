@@ -38,7 +38,7 @@ public class CacheFinal {
 	public static final String TOOLS_PAGER_CACHE="TOOLS_PAGER_CACHE";
 	public static final String TOOLS_LIST_CACHE="TOOLS_LIST_CACHE";
 	public static final String TOOLS_INFO_CACHE="TOOLS_INFO_CACHE";
-	
+	public static final String SYSTEM_RUN_INFO="SYSTEM_RUN_INFO";
 	public static final String WALL_IP_CACHE="WALL_IP_CACHE";
 	
 	

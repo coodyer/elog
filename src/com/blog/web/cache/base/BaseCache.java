@@ -6,7 +6,7 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
-import com.blog.web.annotation.CacheHandle;
+import com.blog.web.annotation.CacheWrite;
 import com.blog.web.base.cache.CacheFinal;
 import com.blog.web.base.cache.CacheTimerHandler;
 import com.blog.web.entity.IpAddressEntity;
@@ -138,7 +138,7 @@ public class BaseCache {
 		}
 
 	}
-	@CacheHandle(key=CacheFinal.IP_ADDRESS_INFO ,validTime=600)
+	@CacheWrite(key=CacheFinal.IP_ADDRESS_INFO ,validTime=600,fields="ip")
 	public static IpAddressEntity.AddressInfo getIpAddress(String ip) {
 		IpAddressEntity.AddressInfo address=IpAddressUtil.getAddress(ip);
 		return address;

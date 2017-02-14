@@ -31,7 +31,6 @@ public class SuffixFilter implements Filter {
 				.getBean("suffixCache");
 		List<String> staList = suffixCache.loadStaSuffix();
 		List<String> avaList = suffixCache.loadAvaSuffix();
-		avaList.add("do");
 		if (!suffix.equals("") && !staList.contains(suffix)
 				&& !avaList.contains(suffix)) {
 			request.getRequestDispatcher("/WEB-INF/jsp/404.jsp").forward(arg0,

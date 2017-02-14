@@ -8,8 +8,8 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
-import com.blog.web.annotation.CacheHandle;
-import com.blog.web.annotation.DelCacheHandle;
+import com.blog.web.annotation.CacheWipe;
+import com.blog.web.annotation.CacheWrite;
 import com.blog.web.base.cache.CacheFinal;
 import com.blog.web.cache.base.BaseCache;
 import com.blog.web.model.Menus;
@@ -22,27 +22,31 @@ import com.blog.web.util.StringUtils;
 public class MenuCache extends BaseCache {
 	@Resource
 	MenuService menuService;
-	@CacheHandle(key=CacheFinal.ROLE_MENU_LIST_KEY ,validTime=600)
+	@CacheWrite(key=CacheFinal.ROLE_MENU_LIST_KEY ,validTime=600)
 	public  List<Menus> loadMenus(Integer... ids) {
 		List<Menus> menus = (List<Menus>) baseService.findInFields(Menus.class, "seq",
 				false, "id", ids);
 		menus=parsMenus(menus);
 		return menus;
 	}
-	@CacheHandle(key=CacheFinal.MENU_INFO_KEY ,validTime=600)
+	@CacheWrite(key=CacheFinal.MENU_INFO_KEY ,validTime=600)
 	public  Menus getMenu(Integer id) {
 		Menus menu = (Menus) baseService.get(Menus.class, id);
 		return menu;
 	}
-	@DelCacheHandle(keys={CacheFinal.MENU_INFO_KEY,CacheFinal.MENU_LIST_KEY,CacheFinal.ROLE_MENU_LIST_KEY})
+	@CacheWipe(key=CacheFinal.MENU_INFO_KEY,isModel=true)
+	@CacheWipe(key=CacheFinal.MENU_LIST_KEY,isModel=true)
+	@CacheWipe(key=CacheFinal.ROLE_MENU_LIST_KEY,isModel=true)
 	public void save(Menus menu) {
 		baseService.saveOrUpdate(menu);
 	}
-	@DelCacheHandle(keys={CacheFinal.MENU_INFO_KEY,CacheFinal.MENU_LIST_KEY,CacheFinal.ROLE_MENU_LIST_KEY})
+	@CacheWipe(key=CacheFinal.MENU_INFO_KEY,isModel=true)
+	@CacheWipe(key=CacheFinal.MENU_LIST_KEY,isModel=true)
+	@CacheWipe(key=CacheFinal.ROLE_MENU_LIST_KEY,isModel=true)
 	public void delete(Integer id) {
 		menuService.delMenu(id);
 	}
-	@CacheHandle(key=CacheFinal.MENU_ROLE_LIST_KEY ,validTime=600)
+	@CacheWrite(key=CacheFinal.MENU_ROLE_LIST_KEY ,validTime=600)
 	public  List<Menus> loadRoleMenus(Role role) {
 		if (!StringUtils.isNullOrEmpty(role)
 				&& !StringUtils.isNullOrEmpty(role.getMenus())) {
@@ -53,7 +57,7 @@ public class MenuCache extends BaseCache {
 		}
 		return null;
 	}
-	@CacheHandle(key=CacheFinal.MENU_LIST_KEY ,validTime=600)
+	@CacheWrite(key=CacheFinal.MENU_LIST_KEY ,validTime=600)
 	public  List<Menus> loadBaseMenus() {
 		List<Menus> menus = (List<Menus>) baseService.findByField(Menus.class, "seq",
 				false, "type", 0);
@@ -76,7 +80,7 @@ public class MenuCache extends BaseCache {
 						currChilds.add(tmp);
 					}
 				}
-				currChilds = PropertUtil.parsListSeq(currChilds, "seq");
+				currChilds = (List<Menus>) PropertUtil.parsListSeq(currChilds, "seq");
 				father.setChildMenus(currChilds);
 			} catch (Exception e) {
 				e.printStackTrace();

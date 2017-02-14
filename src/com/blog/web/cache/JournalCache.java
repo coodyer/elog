@@ -6,8 +6,8 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
-import com.blog.web.annotation.CacheHandle;
-import com.blog.web.annotation.DelCacheHandle;
+import com.blog.web.annotation.CacheWipe;
+import com.blog.web.annotation.CacheWrite;
 import com.blog.web.base.cache.CacheFinal;
 import com.blog.web.base.page.Pager;
 import com.blog.web.cache.base.BaseCache;
@@ -23,7 +23,7 @@ public class JournalCache extends BaseCache {
 	@Resource
 	JournalService journalService;
 	
-	@CacheHandle(key=CacheFinal.JOURNAL_LIST ,validTime=66)
+	@CacheWrite(key=CacheFinal.JOURNAL_LIST ,validTime=66)
 	public  Pager<Journal> loadJournal(Journal journal,Pager<Journal> pager){
 		Pager<Journal> data=(Pager<Journal>) baseService.findPagerByObject(journal, pager);
 		if(StringUtils.isNullOrEmpty(data)){
@@ -48,7 +48,7 @@ public class JournalCache extends BaseCache {
 		loadTypes((List<Journal>)data.getPageData());
 		return data;
 	}
-	@CacheHandle(key=CacheFinal.JOURNAL_RANK_LIST ,validTime=60)
+	@CacheWrite(key=CacheFinal.JOURNAL_RANK_LIST ,validTime=60)
 	public  List<Journal> loadJournalRank(String orderField){
 		List<Journal> data=(List<Journal>) getCache(CacheFinal.JOURNAL_RANK_LIST+orderField);
 		if(StringUtils.isNullOrEmpty(data)){
@@ -94,18 +94,20 @@ public class JournalCache extends BaseCache {
 		loadTypes((List<Journal>)data.getPageData());
 		return data;
 	}
-	@DelCacheHandle(keys={CacheFinal.JOURNAL_LIST,CacheFinal.JOURNAL_INFO})
+	@CacheWipe(key=CacheFinal.JOURNAL_LIST,isModel=true)
+	@CacheWipe(key=CacheFinal.JOURNAL_INFO,isModel=true)
 	public void delJournal(Integer id) {
 		baseService.delete(Journal.class, id);
 	}
-	@DelCacheHandle(keys={CacheFinal.JOURNAL_LIST,CacheFinal.JOURNAL_INFO})
+	@CacheWipe(key=CacheFinal.JOURNAL_LIST,isModel=true)
+	@CacheWipe(key=CacheFinal.JOURNAL_INFO,isModel=true)
 	public void saveJournal(Journal journal) {
 		baseService.saveOrUpdate(journal);
 	}
 	public  void addViewJournalNoCache(Integer id) {
 		journalService.addViewJournalNoCache(id);
 	}
-	@CacheHandle(key=CacheFinal.JOURNAL_INFO ,validTime=600)
+	@CacheWrite(key=CacheFinal.JOURNAL_INFO ,validTime=600)
 	public Journal getJournal(Integer id) {
 		if(StringUtils.isNullOrEmpty(id)){
 			return null;
@@ -114,7 +116,7 @@ public class JournalCache extends BaseCache {
 		loadTypes(journal);
 		return journal;
 	}
-	@CacheHandle(key=CacheFinal.JOURNAL_INFO ,validTime=60)
+	@CacheWrite(key=CacheFinal.JOURNAL_INFO ,validTime=60)
 	public  Journal getJournal(String title) {
 		if(StringUtils.isNullOrEmpty(title)){
 			return null;
