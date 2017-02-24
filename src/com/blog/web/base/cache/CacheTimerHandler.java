@@ -41,10 +41,7 @@ public class CacheTimerHandler {
 	public static  void addCache(String key, Object ce,
 			int validityTime) {
 		map.put(key, new CacheWrapper(validityTime,ce));
-		synchronized (mutex) {
-			timer.schedule(new TimeoutTimerTask(key), validityTime * 1000);
-		}
-		;
+		timer.schedule(new TimeoutTimerTask(key), validityTime * 1000);
 	}
 	//获取缓存KEY列表
 	public static Set<String> getCacheKeys() {

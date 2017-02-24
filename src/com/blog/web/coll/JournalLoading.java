@@ -111,11 +111,6 @@ public class JournalLoading {
 		}
 		System.out.println(types.getClassName() + "," + vo.getTitle()
 				+ ",获得文章页面信息=============");
-		if (hasJournal(vo.getTitle())) {
-			System.out.println(types.getClassName() + "," + vo.getTitle()
-					+ ",文章已存在=============");
-			return;
-		}
 		String context = getJournalContext(vo.getUrl());
 		if (StringUtils.isNullOrEmpty(context)) {
 			System.out.println(types.getClassName() + "," + vo.getTitle()
@@ -135,13 +130,19 @@ public class JournalLoading {
 				8,
 				MessageFormat.format("assets/journal/logo ({0}).jpg",
 						String.valueOf(StringUtils.getRanDom(1, 89))));
-		jDBCUtil.querySqlUpdate(sql, paraMap);
+		try {
+			jDBCUtil.querySqlUpdate(sql, paraMap);
+		} catch (Exception e) {
+			System.out.println(types.getClassName() + "," + vo.getTitle()
+					+ ",文章已存在=============");
+			return;
+		}
 	}
-	private boolean hasJournal(String title) {
+/*	private boolean hasJournal(String title) {
 		List<Record> journals = jDBCUtil.findByField(Journal.class, "title",
 				title);
 		return !StringUtils.isNullOrEmpty(journals);
-	}
+	}*/
 	private String getJournalContext(String url) {
 		hEntity = HttpUtil.Get(url);
 		if (hEntity == null || StringUtils.isNullOrEmpty(hEntity.getHtml())) {

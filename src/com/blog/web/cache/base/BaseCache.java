@@ -27,7 +27,7 @@ public class BaseCache {
 	 * @param validityTime
 	 *            有效时间
 	 */
-	public static synchronized void addCache(String key, Object ce,
+	public static  void addCache(String key, Object ce,
 			int validityTime) {
 		try {
 			CacheTimerHandler.addCache(key, ce, validityTime);
@@ -36,7 +36,7 @@ public class BaseCache {
 		}
 	}
 
-	public static synchronized void addCache(String key, Object ce) {
+	public static  void addCache(String key, Object ce) {
 		try {
 			CacheTimerHandler.addCache(key, ce);
 		} catch (Exception e) {
@@ -50,7 +50,7 @@ public class BaseCache {
 	 * @param key
 	 * @return
 	 */
-	public static synchronized Object getCache(String key) {
+	public static  Object getCache(String key) {
 		try {
 			return CacheTimerHandler.getCache(key);
 		} catch (Exception e) {
@@ -74,7 +74,7 @@ public class BaseCache {
 	 * @param key
 	 * @return
 	 */
-	public static synchronized boolean contains(String key) {
+	public static  boolean contains(String key) {
 		try {
 			return CacheTimerHandler.contains(key);
 		} catch (Exception e) {
@@ -89,7 +89,7 @@ public class BaseCache {
 	 * 
 	 * @param key
 	 */
-	public static synchronized void removeCache(String key) {
+	public static  void removeCache(String key) {
 		try {
 			CacheTimerHandler.removeCache(key);
 		} catch (Exception e) {
@@ -103,7 +103,7 @@ public class BaseCache {
 	 * 
 	 * @param key
 	 */
-	public static synchronized void removeCacheFuzzy(String key) {
+	public static  void removeCacheFuzzy(String key) {
 		try {
 			CacheTimerHandler.removeCacheFuzzy(key);
 		} catch (Exception e) {
@@ -130,7 +130,7 @@ public class BaseCache {
 	/**
 	 * 清除全部缓存
 	 */
-	public static synchronized void clearCache() {
+	public static  void clearCache() {
 		try {
 			CacheTimerHandler.clearCache();
 		} catch (Exception e) {
