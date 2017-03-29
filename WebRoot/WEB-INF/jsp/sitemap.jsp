@@ -1,5 +1,6 @@
 <%@page import="com.blog.web.util.RequestUtil"%><%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%><%@ taglib prefix="c" uri="/WEB-INF/tld/c.tld" %><%
 String suniffx=(String)request.getAttribute("suffix");
+
 if(suniffx.equalsIgnoreCase("XML")){
 	%>${siteMap.xml}<%
 }

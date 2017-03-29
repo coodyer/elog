@@ -30,7 +30,6 @@
 				</div>
 		</c:if>
 		<c:if test="${!empty pager &&!empty pager.pageData }">
-		<jsp:include page="../base/search.jsp" />
 			<c:forEach items="${pager.pageData }" var="journal" varStatus="index">
 				<div class="blogs">
 					<h3>

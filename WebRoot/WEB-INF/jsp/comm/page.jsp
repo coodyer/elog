@@ -18,8 +18,8 @@
 				<input type="button" value="跳转" onclick="toPage()"
 				style="cursor: pointer;" /></span>
 			<script>
-			function toPages(page) {
-			alert(page);
+				function toPage() {
+					var page = $("#kkpager_btn_go_input").val();
 					var type = '${(empty currType)?'':currType}';
 					var allPage = ${pager.totalPages};
 					if (page > 0 && page <= allPage) {
@@ -27,19 +27,11 @@
 						if (type != '') {
 							url = url + "_" + type;
 						}
-						var journalTitle=$("#journalTitle").val();
-						if (journalTitle != '') {
-							url = url + "_" + journalTitle;
-						}
 						url = url + ".${defSuffix}";
 						window.location.href = url;
 					} else {
 						alert("页码有误");
 					}
-			}
-				function toPage() {
-					var page = $("#kkpager_btn_go_input").val();
-					toPages(page);
 				}
 			</script>
 		</div>

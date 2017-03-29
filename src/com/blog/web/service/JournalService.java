@@ -16,8 +16,15 @@ import com.blog.web.util.StringUtils;
 public class JournalService extends BaseService {
 
 	
-	public Pager<Journal> getSiteMapList(Pager<Journal> pager){
-		return (Pager<Journal>) findPagerByObject(new Journal(), pager, "id", false);
+	public List<Journal> getSiteMapList(Integer lastId){
+		if(lastId==null){
+			lastId=0;
+		}
+		Where where=new Where();
+		where.set("id", ">",lastId);
+		Pager<Journal> pager=new Pager<Journal>();
+		pager.setPageSize(400);
+		return	(List<Journal>) baseDao.findByObject(Journal.class, pager, where, null, null);
 	}
 	
 	public void addViewJournalNoCache(Integer id){

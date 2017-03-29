@@ -165,7 +165,16 @@ public class BaseDao extends HibernateDaoSupport {
 		pager.setPageData(list);
 		return pager;
 	}
+	public List<?> find(String hql, Map<String, Object> map,
+			Pager<?> pager,String orderField,Boolean isDesc) {
+		if(!StringUtils.isNullOrEmpty(orderField)){
+				hql=hql+" order by "+orderField+" "+(isDesc ? "desc" : "");
+		}
+		List<?> list = findByHql(hql, map, pager.getPageSize(),
+				pager.getCurrentPage());
 
+		return list;
+	}
 	public Pager<?> findByPager(String hql, HqlEntity whereEntity,
 			Pager<?> pager) {
 		Map<String, Object> map = whereEntity.getMap();
@@ -431,6 +440,32 @@ public class BaseDao extends HibernateDaoSupport {
 
 	public Object getCountByHql(String hql) {
 		return getCountByHql(hql, null);
+	}
+	public List<?> findByObject(Object obj, Pager<?> pager, Where where,
+			String orderField, Boolean isDesc) {
+		StringBuilder hql = new StringBuilder("select ");
+		try {
+			if (obj instanceof Class) {
+				obj = ((Class) obj).newInstance();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		// 获取主键
+		String primary = getPrimaryKey(obj.getClass());
+		hql.append(primary);
+		hql.append(" from ");
+		hql.append(obj.getClass().getSimpleName());
+		HqlEntity entity = HqlUtil.getHqlWhere(obj, where);
+		if(!StringUtils.isNullOrEmpty(entity.getHql())){
+			hql.append(" where 1=1 ");
+			hql.append(entity.getHql());
+		}
+		if (isDesc == null) {
+			isDesc = true;
+		}
+		List<Object> objs= (List<Object>) find(hql.toString(), entity.getMap(), pager,orderField,isDesc);
+		return findInFields(obj.getClass(), "id", objs);
 	}
 
 	public Pager<?> findPagerByObject(Object obj, Pager<?> pager, Where where,

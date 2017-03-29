@@ -11,7 +11,7 @@
 <script	src='assets/js/jquery.min.js'></script>
 <script type="text/javascript" src="//s.union.360.cn/32891.js"></script>
 <style type="text/css">
-.sbutton{ float:right; width:12%; height:28px; cursor:pointer; border:none; background:url(assets/images/search.png) no-repeat;}
+.sbutton{ float:right; width:12%; height:28px; cursor:pointer; border:none; background:url(comm/img/search.png) no-repeat;}
 .search{ float:right;width:100%; height:28px; margin-left:30px; padding:11px 10px 0 10px; display:inline;}
 .skey{ float:right; width:26%; height:26px; line-height:28px; padding-left:5px; font-size:13px; color:#999;background:#fff;border:solid 1px #CCCCCC;}
 a{

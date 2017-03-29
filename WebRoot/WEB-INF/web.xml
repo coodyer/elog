@@ -104,6 +104,7 @@ version="2.5">
     <url-pattern>*.shell</url-pattern>
     <url-pattern>*.csrf</url-pattern>
     <url-pattern>*.xss</url-pattern>
+    <url-pattern>*.sql</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
     <servlet-name>VerificationServlet</servlet-name>

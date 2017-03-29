@@ -20,6 +20,7 @@ import com.blog.web.util.PropertUtil;
 import com.blog.web.util.StringUtils;
 
 @Service
+@SuppressWarnings("unchecked")
 public class TypeCache extends BaseCache {
 
 	@Resource

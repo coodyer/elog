@@ -64,9 +64,16 @@ public class JDBCUtil {
 				if (resultSet != null) {
 					resultSet.close();
 				}
+			} catch (Exception e2) {
+			}
+			try {
 				if (statement != null) {
 					statement.close();
 				}
+				
+			} catch (Exception e2) {
+			}
+			try {
 				conn.close();
 			} catch (Exception e2) {
 			}
@@ -97,16 +104,23 @@ public class JDBCUtil {
 			e.printStackTrace();
 		} finally {
 			// 关闭连接对象
-			try {
-				if (resultSet != null) {
-					resultSet.close();
-				}
-				if (statement != null) {
-					statement.close();
-				}
-				conn.close();
-			} catch (Exception e2) {
-			}
+						try {
+							if (resultSet != null) {
+								resultSet.close();
+							}
+						} catch (Exception e2) {
+						}
+						try {
+							if (statement != null) {
+								statement.close();
+							}
+							
+						} catch (Exception e2) {
+						}
+						try {
+							conn.close();
+						} catch (Exception e2) {
+						}
 		}
 		return 0;
 	}
@@ -132,6 +146,9 @@ public class JDBCUtil {
 				if (proc != null) {
 					proc.close();
 				}
+			} catch (Exception e2) {
+			}
+			try {
 				conn.close();
 			} catch (Exception e2) {
 			}

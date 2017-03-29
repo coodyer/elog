@@ -22,8 +22,9 @@ public class SiteMapTask {
 			baiduSpider.parsSiteMap();
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
+		}finally{
 		siteMapTaskIsRun = false;
+		}
 	}
 
 	

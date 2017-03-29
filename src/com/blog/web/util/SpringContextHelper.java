@@ -27,5 +27,17 @@ public class SpringContextHelper implements ApplicationContextAware {
 		}
 		return context.getBean(beanName);
 	}
+	public static Object getBean(Class<?> clazz){
+		int i=0;
+		while(context==null&&i<100){
+			try {
+				Thread.sleep(10);
+				i++;
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+		return context.getBean(clazz);
+	}
 
 }

@@ -27,17 +27,14 @@ public class BaiduSpider {
 	JournalService journalService;
 	
 	
-	@SuppressWarnings("unchecked")
 	public void parsSiteMap() {
 		try {
 			SiteMap siteMap = siteMapCache.loadSiteMap();
 			
 			siteMap.setLastJournalId(siteMap.getLastJournalId()==null?0:siteMap.getLastJournalId());
 			siteMap.setLastPage(siteMap.getLastPage()==null?1:siteMap.getLastPage());
-			Pager<Journal> pag = new Pager<Journal>(400, siteMap.getLastPage());
-			pag = journalService.getSiteMapList(pag);
+			List<Journal> list = journalService.getSiteMapList(siteMap.getLastJournalId());
 			siteMap.setLastPage(siteMap.getLastPage()+1);
-			List<Journal> list = (List<Journal>) pag.getPageData();
 			if(StringUtils.isNullOrEmpty(list)){
 				siteMap.setLastJournalId(0);
 				siteMap.setLastPage(1);
