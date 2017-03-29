@@ -20,8 +20,6 @@ import com.blog.web.base.page.Pager;
 import com.blog.web.cache.JournalCache;
 import com.blog.web.cache.TypeCache;
 import com.blog.web.entity.HttpEntity;
-import com.blog.web.entity.Record;
-import com.blog.web.model.Journal;
 import com.blog.web.model.Types;
 import com.blog.web.util.HttpUtil;
 import com.blog.web.util.StringUtils;
