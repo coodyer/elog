@@ -109,7 +109,8 @@ public class JournalLoading {
 		}
 		System.out.println(types.getClassName() + "," + vo.getTitle()
 				+ ",获得文章页面信息=============");
-		String context = getJournalContext(vo.getUrl());
+		Map<String, String> imgMap=new HashMap<String, String>();
+		String context = getJournalContext(vo.getUrl(),imgMap);
 		if (StringUtils.isNullOrEmpty(context)) {
 			System.out.println(types.getClassName() + "," + vo.getTitle()
 					+ ",文章内容为空=============");
@@ -133,6 +134,7 @@ public class JournalLoading {
 		} catch (Exception e) {
 			System.out.println(types.getClassName() + "," + vo.getTitle()
 					+ ",文章已存在=============");
+			delDownImg(imgMap);
 			return;
 		}
 	}
@@ -141,7 +143,7 @@ public class JournalLoading {
 				title);
 		return !StringUtils.isNullOrEmpty(journals);
 	}*/
-	private String getJournalContext(String url) {
+	private String getJournalContext(String url,Map<String, String> map) {
 		hEntity = HttpUtil.Get(url);
 		if (hEntity == null || StringUtils.isNullOrEmpty(hEntity.getHtml())) {
 			return null;
@@ -164,7 +166,7 @@ public class JournalLoading {
 				return context;
 			}
 			// 下载图片
-			context=parsImage(context, images);
+			context=parsImage(context, images,map);
 			return context;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -192,8 +194,7 @@ public class JournalLoading {
 				return null;
 			}
 	}
-	private String parsImage(String context, List<String> imageUrls) throws Exception {
-		Map<String, String> map = new HashMap<String, String>();
+	private String parsImage(String context, List<String> imageUrls,Map<String, String> map) throws Exception {
 		for (String imageUrl : imageUrls) {
 			try {
 				String imgPath = map.get(imageUrl);
