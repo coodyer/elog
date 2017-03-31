@@ -3,10 +3,12 @@ package com.blog.web.base.dao;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.annotation.Resource;
 
@@ -28,7 +30,6 @@ import com.blog.web.base.cache.CacheTimerHandler;
 import com.blog.web.base.page.Pager;
 import com.blog.web.entity.HqlEntity;
 import com.blog.web.entity.Where;
-import com.blog.web.util.HibernateConfigurationUtil;
 import com.blog.web.util.HqlUtil;
 import com.blog.web.util.SpringContextHelper;
 import com.blog.web.util.StringUtils;
@@ -201,21 +202,39 @@ public class BaseDao extends HibernateDaoSupport {
 		return getHibernateTemplate().get(objClass, id);
 	}
 
+	public static Map<String, Boolean> readCountMap=new ConcurrentHashMap<String, Boolean>();
 	public Integer getCountByHql(String hql, Map<String, Object> map) {
 		hql = parsCountHql(hql);
 		String key=StringUtils.getBeanKey(hql,map);
-		Integer count=(Integer) CacheTimerHandler.getCache(key);
-		if(!StringUtils.isNullOrEmpty(count)){
+		CacheTimerHandler.CacheWrapper wrapper= CacheTimerHandler.getCacheWrapper(key);
+		if(readCountMap.containsKey(key)){
+			return (Integer) wrapper.getValue();
+		}
+		try {
+			readCountMap.put(key, true);
+			if(!StringUtils.isNullOrEmpty(wrapper)){
+				if(wrapper.getDate().getTime()-new Date().getTime()<71940){
+					Integer count= ((Long) this.findByHql(hql, map).get(0))
+							.intValue();
+					if(!StringUtils.isNullOrEmpty(count)&&count!=0){
+						CacheTimerHandler.addCache(key, count,72000);
+					}
+				}
+				return (Integer) wrapper.getValue();
+			}
+			Integer count= ((Long) this.findByHql(hql, map).get(0))
+					.intValue();
+			if(!StringUtils.isNullOrEmpty(count)&&count!=0){
+				CacheTimerHandler.addCache(key, count,72000);
+			}
 			return count;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return 0;
+		}finally{
+			readCountMap.remove(key);
 		}
-		count= ((Long) this.findByHql(hql, map).get(0))
-				.intValue();
-		if(!StringUtils.isNullOrEmpty(count)&&count!=0){
-			CacheTimerHandler.addCache(key, count,120);
-		}
-		return count;
 	}
-
 	private String parsCountHql(String hql){
 		while (hql.indexOf("  ")>-1) {
 			hql=hql.replace("  ", " ");

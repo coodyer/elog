@@ -85,7 +85,20 @@ public class CacheTimerHandler {
 		}
 		return wrapper.getValue();
 	}
-
+	/**
+	 * 获取缓存对象
+	 * 
+	 * @param key
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	public static <T> T getCacheWrapper(String key) {
+		CacheWrapper wrapper=(CacheWrapper) map.get(key);
+		if(wrapper==null){
+			return null;
+		}
+		return (T) wrapper;
+	}
 	/**
 	 * 检查是否含有制定key的缓冲
 	 * 
@@ -164,7 +177,7 @@ public class CacheTimerHandler {
 		}
 	}
 
-	private static class CacheWrapper{
+	public static class CacheWrapper{
 		private Date date;
 		private Object value;
 		public CacheWrapper(int time,Object value){
