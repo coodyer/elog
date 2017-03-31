@@ -142,36 +142,44 @@ public class TypeCache extends BaseCache {
 		}
 		Map<Integer, Integer> map = typeService.loadTypeJournalCount();
 		for (Types type : types) {
-			if (StringUtils.isNullOrEmpty(type.getParentClass())
-					&& !StringUtils.isNullOrEmpty(type.getChildTypes())) {
-				int currCount = 0;
-				type.setCount(currCount);
-				if (!StringUtils.isNullOrEmpty(map)) {
-					currCount = (map.get(type.getId()) == null ? 0 : map
-							.get(type.getId()));
-				}
-				for (Types child : type.getChildTypes()) {
-					child.setCount(0);
-					if (StringUtils.isNullOrEmpty(map)) {
-						continue;
-					}
+			try {
+				if (StringUtils.isNullOrEmpty(type.getParentClass())
+						&& !StringUtils.isNullOrEmpty(type.getChildTypes())) {
+					int currCount = 0;
+					type.setCount(currCount);
 					if (!StringUtils.isNullOrEmpty(map)) {
-						child.setCount(map.get(child.getId()) == null ? 0 : map
-								.get(child.getId()));
-						// continue;
+						currCount = (map.get(type.getId()) == null ? 0 : map
+								.get(type.getId()));
 					}
-					if (!StringUtils.isNullOrEmpty(map.get(child.getId()))) {
-						currCount += (map.get(child.getId()));
+					for (Types child : type.getChildTypes()) {
+						try {
+							child.setCount(0);
+							if (StringUtils.isNullOrEmpty(map)) {
+								continue;
+							}
+							if (!StringUtils.isNullOrEmpty(map)) {
+								child.setCount(map.get(child.getId()) == null ? 0 : map
+										.get(child.getId()));
+								// continue;
+							}
+							if (!StringUtils.isNullOrEmpty(map.get(child.getId()))) {
+								currCount += (map.get(child.getId()));
+							}
+						} catch (Exception e) {
+							// TODO: handle exception
+						}
 					}
+					type.setCount(currCount);
+					continue;
 				}
-				type.setCount(currCount);
-				continue;
+				if (StringUtils.isNullOrEmpty(map)) {
+					type.setCount(0);
+					continue;
+				}
+				type.setCount(map.get(type.getId()));
+			} catch (Exception e) {
+				// TODO: handle exception
 			}
-			if (StringUtils.isNullOrEmpty(map)) {
-				type.setCount(0);
-				continue;
-			}
-			type.setCount(map.get(type.getId()));
 		}
 		return types;
 	}
