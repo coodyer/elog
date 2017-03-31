@@ -213,7 +213,7 @@ public class BaseDao extends HibernateDaoSupport {
 		try {
 			readCountMap.put(key, true);
 			if(!StringUtils.isNullOrEmpty(wrapper)){
-				if(wrapper.getDate().getTime()-new Date().getTime()<71940){
+				if(wrapper.getDate().getTime()-new Date().getTime()<71700){
 					Integer count= ((Long) this.findByHql(hql, map).get(0))
 							.intValue();
 					if(!StringUtils.isNullOrEmpty(count)&&count!=0){
