@@ -6,13 +6,26 @@ import org.springframework.stereotype.Service;
 
 import com.blog.web.base.thread.SysThreadPool;
 import com.blog.web.cache.JournalCache;
+import com.blog.web.cache.TypeCache;
 
 @Service("journalRankTask")
 public class JournalRankTask implements InitializingBean {
 	@Resource
 	JournalCache journalCache;
+	@Resource
+	TypeCache typeCache;
+	
 	public synchronized void excuteTask() {
-		journalCache.writeRankCache();
+		try {
+			journalCache.writeRankCache();
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		try {
+			typeCache.writeTypes();
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 	}
 	@Override
 	public void afterPropertiesSet() throws Exception {
