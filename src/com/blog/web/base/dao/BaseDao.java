@@ -208,6 +208,9 @@ public class BaseDao extends HibernateDaoSupport {
 		String key=StringUtils.getBeanKey(hql,map);
 		CacheTimerHandler.CacheWrapper wrapper= CacheTimerHandler.getCacheWrapper(key);
 		if(readCountMap.containsKey(key)){
+			if(wrapper==null||wrapper.getValue()==null){
+				return 0;
+			}
 			return (Integer) wrapper.getValue();
 		}
 		try {
@@ -219,6 +222,9 @@ public class BaseDao extends HibernateDaoSupport {
 					if(!StringUtils.isNullOrEmpty(count)&&count!=0){
 						CacheTimerHandler.addCache(key, count,72000);
 					}
+				}
+				if(wrapper==null||wrapper.getValue()==null){
+					return 0;
 				}
 				return (Integer) wrapper.getValue();
 			}
