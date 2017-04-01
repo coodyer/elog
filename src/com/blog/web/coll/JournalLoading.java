@@ -130,7 +130,10 @@ public class JournalLoading {
 				MessageFormat.format("assets/journal/logo ({0}).jpg",
 						String.valueOf(StringUtils.getRanDom(1, 89))));
 		try {
-			jDBCUtil.querySqlUpdate(sql, paraMap);
+			Integer code=jDBCUtil.querySqlUpdate(sql, paraMap);
+			if(code<1){
+				delDownImg(imgMap);
+			}
 		} catch (Exception e) {
 			System.out.println(types.getClassName() + "," + vo.getTitle()
 					+ ",文章已存在=============");
