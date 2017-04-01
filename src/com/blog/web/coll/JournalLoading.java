@@ -255,11 +255,17 @@ public class JournalLoading {
 	private void loadJournalInfo(Pager<JournalVO> pager, Types types) {
 		System.out.println(types.getClassName() + ",获取文章内容=============");
 		if (StringUtils.isNullOrEmpty(pager)) {
+			pager=new Pager<JournalVO>();
 			System.out.println(types.getClassName() + ",页面为空=============");
+			pager.setCurrentPage(1);
+			pager.setTotalPages(1);
 			return;
 		}
 		if (StringUtils.isNullOrEmpty(pager.getPageData())) {
 			System.out.println(types.getClassName() + ",页面无数据=============");
+			pager=new Pager<JournalVO>();
+			pager.setCurrentPage(1);
+			pager.setTotalPages(1);
 			return;
 		}
 		List<JournalVO> vos = (List<JournalVO>) pager.getPageData();
