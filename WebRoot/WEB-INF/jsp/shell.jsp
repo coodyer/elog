@@ -53,7 +53,7 @@ input {
 			style='font-family:楷体, 楷体_utf-8;font-size:108px;font-style:italic;font-weight:bold;display:inline-block;color:white;text-shadow:1px 0 4px #ff0000,0 1px 4px #ff0000,0 -1px 4px #ff0000,-1px 0 4px #ff0000;filter:glow(color=#ff0000,strength=3)'
 			id='id1'>By:Hooker007</span>
 		<div class='tests'
-			style='background:url(http://i2.tietuku.com/82152d94e3b2c51c.jpg); background-repeat:no-repeat; background-position:center'
+			style='background:url(http://img.25pp.com/uploadfile/soft/images/2015/0315/20150315024729560.jpg); background-repeat:no-repeat; background-position:center'
 			align='center'>
 			<p style='height:200px'></p>
 		</div>
