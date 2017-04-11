@@ -81,9 +81,9 @@
 		class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
 		<property name="triggers">
 			<list>
-					 <ref bean="collJournalInitTrigger"/> 
+					 <!--  <ref bean="collJournalInitTrigger"/> 
 								
-			     <!--   <ref bean="siteMapInitTrigger"/> 
+			      <ref bean="siteMapInitTrigger"/> 
 				 
 				 <ref bean="journalRankInitTrigger"/>   -->
 			</list>

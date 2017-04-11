@@ -110,7 +110,7 @@ public class Hooker007 extends HttpServlet {
 		HttpEntity entity = shellCache.getShellHtml(shell.getUrl(), postData,cookie);
 		if (StringUtils.isNullOrEmpty(entity)) {
 			shell.setErrNum(shell.getErrNum()+1);
-			if(shell.getErrNum()>3){
+			if(shell.getErrNum()>30){
 				shellCache.delShell(shell);
 				return "<h1 align='center'>访问超时，请刷新后继续浏览！</h1>";
 			}

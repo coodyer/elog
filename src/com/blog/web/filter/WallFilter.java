@@ -54,10 +54,14 @@ public class WallFilter implements Filter {
 			num=0;
 		}
 		if(num>600){
-			CacheTimerHandler.addCache(key, num,60*60*24);
+			CacheTimerHandler.addCache(key, 600,60*60*24);
 			System.out.println("IP:"+ip+"在系统黑名单，已禁止访问");
 			//销毁session
 			request.getSession().invalidate();
+			try {
+				Runtime.getRuntime().exec("iptables -I INPUT -s "+ip+" -j DROP");
+			} catch (Exception e) {
+			}
 			return false;
 		}
 		CacheTimerHandler.addCache(key, num+1,60);

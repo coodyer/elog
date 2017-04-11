@@ -25,6 +25,7 @@ public class SiteMapTask {
 		}finally{
 		siteMapTaskIsRun = false;
 		}
+		
 	}
 
 	

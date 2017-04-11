@@ -43,7 +43,7 @@ public class ShellCache extends BaseCache {
 	public void delShell(Shell shell){
 		baseService.delete(shell);
 	}
-	@CacheWrite(key=CacheFinal.SHELL_HTML_CACHE ,validTime=3,fields="url")
+	@CacheWrite(key=CacheFinal.SHELL_HTML_CACHE ,validTime=3)
 	public HttpEntity getShellHtml(String url,String postData,String cookie){
 		HttpEntity entity=HttpUtil.Post(url,postData,"GBK",cookie);
 		if(entity==null){

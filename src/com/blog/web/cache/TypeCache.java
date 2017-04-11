@@ -47,7 +47,7 @@ public class TypeCache extends BaseCache {
 	// 加载第三方采集类别
 	@CacheWrite(key = CacheFinal.JOURNAL_TYPE_LIST, validTime = 600)
 	public  List<Types> loadOtherTypes() {
-		Where where = new Where().set("otherUrl", "<>", "").set("otherUrl", " is not null ", " ");
+		Where where = new Where().set("otherUrl", "<>", "").set("otherUrl", " is not null ", null);
 		List<Types> types = (List<Types>) baseService.findByObject(Types.class,
 				where);
 		return types;
