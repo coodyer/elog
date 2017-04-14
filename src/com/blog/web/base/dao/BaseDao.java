@@ -221,9 +221,10 @@ public class BaseDao extends HibernateDaoSupport {
 							.intValue();
 					if(!StringUtils.isNullOrEmpty(count)&&count!=0){
 						CacheTimerHandler.addCache(key, count,72000);
+						return count;
 					}
 				}
-				if(wrapper==null||wrapper.getValue()==null){
+				if(wrapper.getValue()==null){
 					return 0;
 				}
 				return (Integer) wrapper.getValue();
