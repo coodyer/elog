@@ -26,18 +26,18 @@ public class TypeCache extends BaseCache {
 	@Resource
 	TypeService typeService;
 
-	@CacheWrite(key = CacheFinal.JOURNAL_TYPE_LIST, validTime = 600)
+	@CacheWrite(key = CacheFinal.JOURNAL_TYPE_LIST, validTime = 1200)
 	public  List<Types> loadTypes() {
 		return null;
 	}
-	@CacheWrite(key = CacheFinal.JOURNAL_TYPE_LIST, validTime = 1500)
+	@CacheWrite(key = CacheFinal.JOURNAL_TYPE_LIST, validTime = 300)
 	public  List<Types> writeTypes() {
 		List<Types> types = (List<Types>) baseService.load(Types.class);
 		types = formatTypes(types);
 		types = loadTypeJournalCount(types);
 		return types;
 	}
-	@CacheWrite(key = CacheFinal.JOURNAL_TYPE_LIST, validTime = 600)
+	@CacheWrite(key = CacheFinal.JOURNAL_TYPE_LIST, validTime = 300)
 	public  List<Types> loadInTypes(Integer... ids) {
 		List<Types> types = (List<Types>) baseService.findInFields(Types.class,
 				"id", ids);
